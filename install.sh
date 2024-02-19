@@ -5,8 +5,10 @@ install_packages() {
     local packages="$1"
     case "$2" in
         apt-get)
+            sudo add-apt-repository universe -y
             sudo apt-get update
-            sudo apt-get install -y $packages
+            local packages_universe=$(echo "$packages" | sed -e 's/tesseract /tesseract-ocr /g' -e 's/tesseract-data-spa/tesseract-ocr-spa/g')
+            sudo apt-get install -y $packages_universe
             ;;
         dnf)
             sudo dnf install -y $packages
